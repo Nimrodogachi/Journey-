@@ -38,7 +38,14 @@ def parse_timestamp(value):
     if value.endswith("-00:00"):
         raise ValueError("An unknown local offset is not a known timezone.")
     try:
-        return datetime.fromisoformat(value.replace("Z", "+00:00")).astimezone(timezone.utc)
+        # Python 3.10 accepts only 3 or 6 fractional digits in fromisoformat.
+        # Normalize our documented 1-6 digit subset without changing the instant.
+        normalized = re.sub(
+            r"\.([0-9]{1,6})(?=Z|[+-])",
+            lambda match: "." + match.group(1).ljust(6, "0"),
+            value,
+        ).replace("Z", "+00:00")
+        return datetime.fromisoformat(normalized).astimezone(timezone.utc)
     except (ValueError, OverflowError) as exc:
         raise ValueError("Invalid or out-of-range timestamp.") from exc
 

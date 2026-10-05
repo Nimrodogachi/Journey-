@@ -44,7 +44,11 @@ class TimestampTests(unittest.TestCase):
                 demo.parse_timestamp(stamp)
 
     def test_microseconds_and_leap_date_are_supported(self):
-        self.assertEqual(demo.parse_timestamp("2024-02-29T10:00:00.1Z").microsecond, 100000)
+        for fraction in ("1", "12", "123", "1234", "12345", "123456"):
+            for offset in ("Z", "+03:00", "-04:00"):
+                with self.subTest(fraction=fraction, offset=offset):
+                    stamp = "2024-02-29T10:00:00." + fraction + offset
+                    self.assertEqual(demo.parse_timestamp(stamp).microsecond, int(fraction.ljust(6, "0")))
 
 
 class DecisionTests(unittest.TestCase):
