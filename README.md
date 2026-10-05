@@ -6,6 +6,12 @@ Offline email preflight plus a synthetic lifecycle decision case study, with rep
 
 This is a self-directed portfolio project by **Nimrod Ogachi, founder of Repeat Foundry**. The examples are fictional, and there are no client-results or revenue claims. The original repository URL, `Journey-`, is retained; this project gives it a concrete purpose.
 
+## Discuss your own email journey
+
+[**Post-purchase email copy review and QA handoff on Contra →**](https://contra.com/s/PqMEQRNZ-post-purchase-email-copy-review-and-qa-handoff)
+
+One journey, up to three emails. Share the journey type, goal, and desired deliverable; scope and pricing are agreed first. You can also [email Nimrod](mailto:ogachi.nimrod@gmail.com). Keep credentials and customer records out of your enquiry.
+
 ## Start with a work sample
 
 1. Compare the [unfinished welcome email](examples/welcome-before.html) with the [reviewed static example](examples/welcome-reviewed.html).
