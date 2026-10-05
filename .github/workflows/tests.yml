@@ -26,5 +26,6 @@ jobs:
         run: python -m unittest discover -s tests -v
       - name: Compile and check reviewed fixture
         run: |
-          python -m py_compile emailqa.py
+          python -m py_compile emailqa.py lifecycle_demo.py
           python emailqa.py examples/welcome-reviewed.json --strict
+          python lifecycle_demo.py examples/lifecycle-scenarios.json

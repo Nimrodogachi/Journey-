@@ -1,0 +1,294 @@
+{
+  "schema_version": 1,
+  "scope": "Synthetic decision logic only; not send approval or platform integration.",
+  "evaluated_at": "2026-10-05T12:00:00Z",
+  "policy": {
+    "minimum_delay_seconds": 3600,
+    "checkout_window_seconds": 86400,
+    "cooldown_seconds": 604800
+  },
+  "summary": {
+    "cases": 30,
+    "expected_matches": 30,
+    "eligible": 7,
+    "ineligible": 8,
+    "review": 15,
+    "naive_eligible_but_ineligible": 5,
+    "naive_eligible_but_review": 9
+  },
+  "cases": [
+    {
+      "case_id": "eligible-first-reminder",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "inactive-consent",
+      "naive_outcome": "ineligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "CONSENT_INACTIVE"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "suppressed-profile",
+      "naive_outcome": "eligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "PROFILE_SUPPRESSED"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "purchase-after-checkout",
+      "naive_outcome": "eligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "PURCHASE_AT_OR_AFTER_CHECKOUT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "purchase-exactly-at-checkout",
+      "naive_outcome": "eligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "PURCHASE_AT_OR_AFTER_CHECKOUT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "purchase-before-checkout",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "minimum-delay-one-microsecond-short",
+      "naive_outcome": "ineligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "MINIMUM_DELAY_NOT_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "minimum-delay-exact",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "checkout-window-exact",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "checkout-window-one-microsecond-expired",
+      "naive_outcome": "eligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "CHECKOUT_CONTEXT_EXPIRED"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "cooldown-one-microsecond-short",
+      "naive_outcome": "eligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "REMINDER_COOLDOWN_ACTIVE"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "cooldown-exact",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "equivalent-positive-offset",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "equivalent-negative-offset",
+      "naive_outcome": "eligible",
+      "outcome": "eligible",
+      "reasons": [
+        "ALL_RULES_MET"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "multiple-business-blockers",
+      "naive_outcome": "ineligible",
+      "outcome": "ineligible",
+      "reasons": [
+        "CONSENT_INACTIVE",
+        "PROFILE_SUPPRESSED",
+        "PURCHASE_AT_OR_AFTER_CHECKOUT",
+        "REMINDER_COOLDOWN_ACTIVE"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "missing-consent",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_CONSENT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "unknown-consent",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "INVALID_CONSENT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "missing-suppression-status",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_SUPPRESSED"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "string-false-is-not-a-boolean",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "INVALID_SUPPRESSED"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "missing-purchase-history",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_LAST_PURCHASE_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "missing-reminder-history",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_LAST_REMINDER_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "missing-checkout-context",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_CHECKOUT_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "future-checkout",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "FUTURE_CHECKOUT_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "future-purchase",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "FUTURE_LAST_PURCHASE_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "future-reminder",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "FUTURE_LAST_REMINDER_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "naive-checkout-timestamp",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "INVALID_CHECKOUT_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "impossible-purchase-date",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "INVALID_LAST_PURCHASE_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "unknown-reminder-offset",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "INVALID_LAST_REMINDER_AT"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "unexpected-input-field",
+      "naive_outcome": "eligible",
+      "outcome": "review",
+      "reasons": [
+        "UNEXPECTED_INPUT_FIELDS"
+      ],
+      "expected_match": true
+    },
+    {
+      "case_id": "invalid-data-precedes-business-blocker",
+      "naive_outcome": "ineligible",
+      "outcome": "review",
+      "reasons": [
+        "MISSING_LAST_PURCHASE_AT"
+      ],
+      "expected_match": true
+    }
+  ]
+}

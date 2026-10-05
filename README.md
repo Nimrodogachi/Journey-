@@ -1,17 +1,18 @@
 # Repeat Foundry Email Preflight
 
-An offline, dependency-free checker for email drafts, with a practical lifecycle QA handoff.
+Offline email preflight plus a synthetic lifecycle decision case study, with reproducible tests and a practical QA handoff.
 
 **For DTC marketers and agency teams reviewing email before platform testing.** Catch unfinished links, missing tracking fields, image-alt omissions, and selected personalization risks; then give the campaign owner a clear list of what still needs human verification.
 
 This is a self-directed portfolio project by **Nimrod Ogachi, founder of Repeat Foundry**. The examples are fictional, and there are no client-results or revenue claims. The original repository URL, `Journey-`, is retained; this project gives it a concrete purpose.
 
-## Review the work in two minutes
+## Start with a work sample
 
 1. Compare the [unfinished welcome email](examples/welcome-before.html) with the [reviewed static example](examples/welcome-reviewed.html).
 2. Read the [before report](examples/welcome-before.report.json) and [reviewed report](examples/welcome-reviewed.report.json).
 3. Use the [lifecycle QA handoff](docs/lifecycle-qa-handoff.md) to assign platform tests, evidence, fixes, and release responsibility.
-4. See [three buyer use-case hypotheses](docs/buyer-use-cases.md). These are possible workflows, not validated customer demand or adoption.
+4. Inspect the [lifecycle decision case study](docs/lifecycle-decision-case-study.md): explicit rules, 30 synthetic scenarios, and a reproducible decision report.
+5. See [three buyer use-case hypotheses](docs/buyer-use-cases.md). These are possible workflows, not validated customer demand or adoption.
 
 The unfinished fixture has **4 errors and 4 warnings**. The reviewed fixture has **0 errors and 0 warnings in the implemented static checks**. It still requires a real sender footer, platform preview, consent/eligibility checks, live-link tests, and owner approval. It is not a send-ready campaign.
 
@@ -40,6 +41,18 @@ BLOCKERS_FOUND: 4 error(s), 4 warning(s)
 Manual review still required:
 ...
 ```
+
+## Lifecycle decision case study
+
+A second runnable work sample tests a fictional checkout-reminder policy before it is translated into platform settings. It covers consent, suppression, a purchase after checkout, event recency, minimum delay, reminder cooldown, and invalid or missing timestamps.
+
+```sh
+python3 lifecycle_demo.py examples/lifecycle-scenarios.json
+```
+
+The [checked-in report](examples/lifecycle-scenarios.report.json) evaluates **30 synthetic scenarios** against explicit expected decisions: **7 eligible, 8 ineligible, and 15 needing review**. A deliberately incomplete comparison rule marks 5 ineligible scenarios and 9 review-needed scenarios eligible. These are intentionally seeded examples, not measured production defects or customer results.
+
+The [case study and decision log](docs/lifecycle-decision-case-study.md) explain the rules, exact time boundaries, assumptions, and limits. An `eligible` result means only that this fictional model's conditions match. It never authorizes a send, establishes legal consent, or verifies a Klaviyo/Shopify configuration. Exit `0` means all expected fixture decisions matched; `1` means a mismatch; `2` means invalid input.
 
 ## Check your own draft locally
 
@@ -94,12 +107,14 @@ Errors are issues to resolve or explicitly review before proceeding. Warnings ar
 
 ## Development and verification
 
+See the [project updates](CHANGELOG.md) and [contribution guide](CONTRIBUTING.md) for changes, reproducible bug reports, and privacy-safe contributions.
+
 ```sh
 python3 -m unittest discover -s tests -v
-python3 -m py_compile emailqa.py
+python3 -m py_compile emailqa.py lifecycle_demo.py
 ```
 
-Tests cover both fixtures, severity and exit codes, placeholder boundaries, invalid URL handling, UTF-8/size limits, tracking, fallback hints, opt-out detection, and report redaction. GitHub Actions runs the same checks on Python 3.10, 3.12, and 3.13 when workflows are available. See [test workflow](.github/workflows/tests.yml) for its exact scope.
+Tests cover both email fixtures, severity and exit codes, placeholder boundaries, invalid URL handling, UTF-8/size limits, tracking, fallback hints, opt-out detection, and report redaction. The lifecycle suite additionally checks timestamp and delay boundaries, invalid/unknown data, decision reasons, and exact report regeneration. GitHub Actions runs the same checks on Python 3.10, 3.12, and 3.13 when workflows are available. See [test workflow](.github/workflows/tests.yml) for its exact scope.
 
 To reproduce the checked-in reports:
 
@@ -109,7 +124,7 @@ python3 emailqa.py examples/welcome-before.json --format json > examples/welcome
 python3 emailqa.py examples/welcome-reviewed.json --format json > examples/welcome-reviewed.report.json
 ```
 
-The CLI and synthetic tests were prepared with AI assistance and reviewed through executable tests. Treat this as an inspectable work sample; it does not establish production deployment or client experience.
+The tools and synthetic tests were prepared with AI assistance and reviewed through executable tests. Treat this as an inspectable work sample; it does not establish production deployment or client experience.
 
 ## Reference guidance
 

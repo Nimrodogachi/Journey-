@@ -1,0 +1,491 @@
+{
+  "schema_version": 1,
+  "synthetic_only": true,
+  "evaluated_at": "2026-10-05T12:00:00Z",
+  "policy": {
+    "minimum_delay_seconds": 3600,
+    "checkout_window_seconds": 86400,
+    "cooldown_seconds": 604800
+  },
+  "cases": [
+    {
+      "id": "eligible-first-reminder",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "inactive-consent",
+      "input": {
+        "consent": "inactive",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "CONSENT_INACTIVE"
+        ]
+      }
+    },
+    {
+      "id": "suppressed-profile",
+      "input": {
+        "consent": "active",
+        "suppressed": true,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "PROFILE_SUPPRESSED"
+        ]
+      }
+    },
+    {
+      "id": "purchase-after-checkout",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-10-05T11:00:00Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "PURCHASE_AT_OR_AFTER_CHECKOUT"
+        ]
+      }
+    },
+    {
+      "id": "purchase-exactly-at-checkout",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-10-05T10:00:00Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "PURCHASE_AT_OR_AFTER_CHECKOUT"
+        ]
+      }
+    },
+    {
+      "id": "purchase-before-checkout",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-10-05T09:59:59.999999Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "minimum-delay-one-microsecond-short",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T11:00:00.000001Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "MINIMUM_DELAY_NOT_MET"
+        ]
+      }
+    },
+    {
+      "id": "minimum-delay-exact",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T11:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "checkout-window-exact",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-04T12:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "checkout-window-one-microsecond-expired",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-04T11:59:59.999999Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "CHECKOUT_CONTEXT_EXPIRED"
+        ]
+      }
+    },
+    {
+      "id": "cooldown-one-microsecond-short",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": "2026-09-28T12:00:00.000001Z"
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "REMINDER_COOLDOWN_ACTIVE"
+        ]
+      }
+    },
+    {
+      "id": "cooldown-exact",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": "2026-09-28T12:00:00Z"
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "equivalent-positive-offset",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T13:00:00+03:00",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "equivalent-negative-offset",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T06:00:00-04:00",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "eligible",
+        "reasons": [
+          "ALL_RULES_MET"
+        ]
+      }
+    },
+    {
+      "id": "multiple-business-blockers",
+      "input": {
+        "consent": "inactive",
+        "suppressed": true,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-10-05T11:00:00Z",
+        "last_reminder_at": "2026-10-04T12:00:00Z"
+      },
+      "expected": {
+        "outcome": "ineligible",
+        "reasons": [
+          "CONSENT_INACTIVE",
+          "PROFILE_SUPPRESSED",
+          "PURCHASE_AT_OR_AFTER_CHECKOUT",
+          "REMINDER_COOLDOWN_ACTIVE"
+        ]
+      }
+    },
+    {
+      "id": "missing-consent",
+      "input": {
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_CONSENT"
+        ]
+      }
+    },
+    {
+      "id": "unknown-consent",
+      "input": {
+        "consent": "unknown",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "INVALID_CONSENT"
+        ]
+      }
+    },
+    {
+      "id": "missing-suppression-status",
+      "input": {
+        "consent": "active",
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_SUPPRESSED"
+        ]
+      }
+    },
+    {
+      "id": "string-false-is-not-a-boolean",
+      "input": {
+        "consent": "active",
+        "suppressed": "false",
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "INVALID_SUPPRESSED"
+        ]
+      }
+    },
+    {
+      "id": "missing-purchase-history",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_LAST_PURCHASE_AT"
+        ]
+      }
+    },
+    {
+      "id": "missing-reminder-history",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_LAST_REMINDER_AT"
+        ]
+      }
+    },
+    {
+      "id": "missing-checkout-context",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": null,
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_CHECKOUT_AT"
+        ]
+      }
+    },
+    {
+      "id": "future-checkout",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T12:00:00.000001Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "FUTURE_CHECKOUT_AT"
+        ]
+      }
+    },
+    {
+      "id": "future-purchase",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-10-05T12:00:00.000001Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "FUTURE_LAST_PURCHASE_AT"
+        ]
+      }
+    },
+    {
+      "id": "future-reminder",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": "2026-10-05T12:00:00.000001Z"
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "FUTURE_LAST_REMINDER_AT"
+        ]
+      }
+    },
+    {
+      "id": "naive-checkout-timestamp",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00",
+        "last_purchase_at": null,
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "INVALID_CHECKOUT_AT"
+        ]
+      }
+    },
+    {
+      "id": "impossible-purchase-date",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": "2026-02-30T10:00:00Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "INVALID_LAST_PURCHASE_AT"
+        ]
+      }
+    },
+    {
+      "id": "unknown-reminder-offset",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": "2026-09-28T12:00:00-00:00"
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "INVALID_LAST_REMINDER_AT"
+        ]
+      }
+    },
+    {
+      "id": "unexpected-input-field",
+      "input": {
+        "consent": "active",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_purchase_at": null,
+        "last_reminder_at": null,
+        "consent_override": true
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "UNEXPECTED_INPUT_FIELDS"
+        ]
+      }
+    },
+    {
+      "id": "invalid-data-precedes-business-blocker",
+      "input": {
+        "consent": "inactive",
+        "suppressed": false,
+        "checkout_at": "2026-10-05T10:00:00Z",
+        "last_reminder_at": null
+      },
+      "expected": {
+        "outcome": "review",
+        "reasons": [
+          "MISSING_LAST_PURCHASE_AT"
+        ]
+      }
+    }
+  ]
+}
