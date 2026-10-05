@@ -1,0 +1,66 @@
+{
+  "schema_version": 1,
+  "tool_version": "1.0.0",
+  "status": "BLOCKERS_FOUND",
+  "summary": {
+    "errors": 4,
+    "warnings": 4
+  },
+  "findings": [
+    {
+      "severity": "error",
+      "code": "MISSING_PREHEADER",
+      "location": "preheader",
+      "message": "Provide non-empty preheader text."
+    },
+    {
+      "severity": "warning",
+      "code": "LONG_SUBJECT",
+      "location": "subject",
+      "message": "Subject exceeds the project's 60-character review threshold; preview truncation on target devices."
+    },
+    {
+      "severity": "error",
+      "code": "PLACEHOLDER_URL",
+      "location": "link 1, line 10",
+      "message": "Replace the empty or fragment-only destination."
+    },
+    {
+      "severity": "warning",
+      "code": "MISSING_UTM",
+      "location": "link 2, line 11",
+      "message": "Review tracking parameters: utm_source, utm_medium, utm_campaign. Platform-added tracking is not visible here."
+    },
+    {
+      "severity": "error",
+      "code": "UNSUBSCRIBE_NOT_DETECTED",
+      "location": "html",
+      "message": "No recognized unsubscribe hook was detected. Add one or manually review an unsupported implementation; this heuristic is not compliance validation."
+    },
+    {
+      "severity": "warning",
+      "code": "MISSING_ALT",
+      "location": "image 1, line 8",
+      "message": "Add meaningful alt text, or alt=\"\" for a deliberately decorative image."
+    },
+    {
+      "severity": "error",
+      "code": "PLACEHOLDER_HOST",
+      "location": "image 1, line 8",
+      "message": "Replace the example, staging, local, or non-public destination before a real send."
+    },
+    {
+      "severity": "warning",
+      "code": "FIRST_NAME_FALLBACK",
+      "location": "html",
+      "message": "A first-name variable has no recognized non-empty quoted default. Confirm missing-name behavior in the platform."
+    }
+  ],
+  "manual_checks": [
+    "Verify consent, audience exclusions, flow triggers, filters, delays, and purchase suppression in the sending platform.",
+    "Preview real profile/event variants and missing values; test conditional blocks and dynamic URLs.",
+    "Open every destination, verify offers and dates, and review mobile/desktop rendering in actual inboxes.",
+    "Confirm sender/reply-to, required footer details, and working opt-out behavior in an authorized live test.",
+    "Record reviewer approval before any real audience send. This report does not approve a send."
+  ]
+}

@@ -1,0 +1,9 @@
+__pycache__/
+*.py[cod]
+.venv/
+.DS_Store
+# Keep real drafts, exports, customer data, and local reports out of Git.
+private/
+reports/
+.env
+.env.*

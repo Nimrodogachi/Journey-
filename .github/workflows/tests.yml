@@ -1,0 +1,30 @@
+name: Python tests
+
+"on":
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ['3.10', '3.12', '3.13']
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7
+        with:
+          persist-credentials: false
+      - uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Unit and CLI regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Compile and check reviewed fixture
+        run: |
+          python -m py_compile emailqa.py
+          python emailqa.py examples/welcome-reviewed.json --strict

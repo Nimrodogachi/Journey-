@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "tool_version": "1.0.0",
+  "status": "STATIC_CHECKS_COMPLETE",
+  "summary": {
+    "errors": 0,
+    "warnings": 0
+  },
+  "findings": [],
+  "manual_checks": [
+    "Verify consent, audience exclusions, flow triggers, filters, delays, and purchase suppression in the sending platform.",
+    "Preview real profile/event variants and missing values; test conditional blocks and dynamic URLs.",
+    "Open every destination, verify offers and dates, and review mobile/desktop rendering in actual inboxes.",
+    "Confirm sender/reply-to, required footer details, and working opt-out behavior in an authorized live test.",
+    "Record reviewer approval before any real audience send. This report does not approve a send."
+  ]
+}
