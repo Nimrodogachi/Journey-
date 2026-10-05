@@ -6,6 +6,12 @@ Offline email preflight plus a synthetic lifecycle decision case study, with rep
 
 This is a self-directed portfolio project by **Nimrod Ogachi, founder of Repeat Foundry**. The examples are fictional, and there are no client-results or revenue claims. The original repository URL, `Journey-`, is retained; this project gives it a concrete purpose.
 
+## Start here: a three-minute email review
+
+[**Would you send it? Read the exercise →**](docs/would-you-send-it.md)
+
+Compare two fictional welcome-email drafts, make your own release decision, and see the remaining checks a campaign owner needs. No Python or account access is required. The exercise includes a reusable review note and a route to discuss a scoped review of your own copy.
+
 ## Discuss your own email journey
 
 [**Post-purchase email copy review and QA handoff on Contra →**](https://contra.com/s/PqMEQRNZ-post-purchase-email-copy-review-and-qa-handoff)
