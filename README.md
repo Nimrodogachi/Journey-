@@ -154,6 +154,7 @@ For lifecycle email copy, a defined QA review, or a practical flow specification
 
 - [View the retention marketing portfolio](https://nimrod-ogachi-klaviyo.netlify.app/portfolio/)
 - [Explore Repeat Foundry](https://nimrod-ogachi-klaviyo.netlify.app/repeat-foundry/)
+- [Visit the Repeat Foundry company website](https://repeatfoundry.netlify.app/)
 - [Email Nimrod Ogachi](mailto:ogachi.nimrod@gmail.com)
 
 Share the business question and desired deliverable first. Do not send credentials or customer exports through a public issue.
